@@ -31,6 +31,7 @@ describe('adding/deleting board', () => {
         newBoard.addNewScrumBoard("Scrum Board 1");
         cy.wait('@addScrumBoard').then(interception => {
             expect(interception.response.statusCode).eq(201);
+            expect(interception.response.statusMessage).eq('Created');
         })
     })
 
@@ -46,6 +47,7 @@ describe('adding/deleting board', () => {
         cy.wait('@addKanbanBoard').then(interception => {
             boardId = interception.response.body.id
             expect(interception.response.statusCode).eq(201);
+            expect(interception.response.statusMessage).eq('Created');
         })
     })
 
@@ -69,7 +71,9 @@ describe('adding/deleting board', () => {
         cy.get('.vs-c-btn--warning').scrollIntoView().click()
         cy.get('button[name="save-btn"]').click()
         cy.wait('@successfulDelete').then(interception => {
+            console.log(interception)
             expect(interception.response.statusCode).eq(200);
+            expect(interception.response.statusMessage).eq('OK');
         })
     })
 
